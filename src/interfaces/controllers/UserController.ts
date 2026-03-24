@@ -6,9 +6,9 @@ const userService = new UserServiceImpl();
 export class UserController {
     async createUser(req: Request, res: Response) {
         console.log('REQUESTTTTT', req);
-        const { nombre, usuario, password } = req.body;
+        const { nombre, apellido, usuario, password } = req.body;
         try {
-            const user = await userService.createUser(nombre, usuario, password);
+            const user = await userService.createUser(nombre, apellido, usuario);
             res.status(201).json(user);
         } catch (error) {
            console.error("Error creating user: ", error);
@@ -48,9 +48,9 @@ export class UserController {
 
     async updateUser(req: Request, res: Response) {
         const { id } = req.params;
-        const { nombre, usuario, password } = req.body;
+        const { nombre, apellido, usuario, password } = req.body;
         try {
-            const user = await userService.updateUser(Number(id), nombre, usuario, password);
+            const user = await userService.updateUser(Number(id), nombre, apellido, usuario);
             if (!user) {
                 res.status(404).json({ error: "User not found" });
             } else {
@@ -75,6 +75,6 @@ export class UserController {
             console.error("Error deleting user: ", error);
             res.status(500).json({ error: "Failed to delete user" });
         }
-    }
+    } 
 
 }
