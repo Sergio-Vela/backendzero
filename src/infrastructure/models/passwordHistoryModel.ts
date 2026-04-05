@@ -5,6 +5,7 @@ export class PasswordHistory extends Model {
     public id!: number;
     public userId!: number;
     public pwHash!: string;
+    public current!: boolean;
     public createdAt!: Date;
 }
 PasswordHistory.init(
@@ -25,6 +26,7 @@ PasswordHistory.init(
         current: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
+            defaultValue: false,
         },
         createdAt: {
             type: DataTypes.DATE,

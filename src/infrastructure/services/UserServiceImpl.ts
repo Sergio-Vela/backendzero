@@ -11,7 +11,7 @@ export class UserServiceImpl implements UserService {
             throw new Error("Error creating user");
         }else{
             console.log("User created successfully: ", user.get());
-            await new UserProfileServiceImpl().createUserProfile(user.id, "", "", "");
+            await new UserProfileServiceImpl().createUserProfile({userId: user.id, fotoBase64: null, telefono: null, correo: null, biografia: null, fechaNac: null, genero: null});
             await new PasswordHistoryServiceImpl().createPasswordHistory(user.id, "initialPassword", new Date());
             await new UserRoleServiceImpl().createUserRole(user.id, 1);
         } 

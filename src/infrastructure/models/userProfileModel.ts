@@ -4,9 +4,13 @@ import { sequelize } from "../database/sequelize";
 export class UserProfile extends Model {
     public id!: number;
     public userId!: number;
-    public fotoUrl!: string | null;
+    public userName!: string;
+    public fotoBase64!: string | null;
     public telefono!: string | null;
+    public correo!: string | null;
     public biografia!: string;
+    public fechaNac!: Date | null;
+    public genero!: string;
 
 }
 
@@ -21,18 +25,30 @@ UserProfile.init(
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        fotoUrl: {
-            type: DataTypes.STRING,
+        fotoBase64: {
+            type: DataTypes.TEXT('medium'),
             allowNull: true,
         },
         telefono: {
+            type: DataTypes.STRING(20),
+            allowNull: true,
+        },
+        correo: {
             type: DataTypes.STRING,
             allowNull: true,
         },
         biografia: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false,
         },
+        fechaNac: {
+            type: DataTypes.DATE,
+            allowNull: true,
+        },
+        genero: {
+            type: DataTypes.CHAR(1),
+            allowNull: true,
+        }
     },
     {
        sequelize,

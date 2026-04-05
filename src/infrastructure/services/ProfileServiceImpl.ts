@@ -1,34 +1,53 @@
 import { UserProfileService } from "../../domain/services/UserProfileService";
 import { User } from "../models/usermodel";
 import { UserProfile } from "../models/userProfileModel";
+import { UserProfileDTO } from "../../application/dtos/userProfileDto";
 
 export class UserProfileServiceImpl implements UserProfileService {
-    async createUserProfile(userId: number, fotoUrl: string, telefono: string, biografia: string): Promise<UserProfile>{
-        const createProfile: UserProfile = await UserProfile.create({ userId: userId, fotoUrl, telefono, biografia });
+/*     async createUserProfile(userId: number, fotoBase64: string, telefono: string, correo: string, biografia: string, fechaNac: Date, genero: string): Promise<UserProfile>{
+        const createProfile: UserProfile = await UserProfile.create({ userId: userId, fotoBase64, telefono, correo, biografia, fechaNac, genero });
+        return createProfile
+    } */
+
+    async createUserProfile(data: {
+        userId: number;
+        fotoBase64?: string | null;
+        telefono?: string | null;
+        correo?: string | null;
+        biografia: string | null;
+        fechaNac?: Date | null;
+        genero?: string | null;
+    }): Promise<UserProfile>{
+        const createProfile: UserProfile = await UserProfile.create(data);
         return createProfile
     }
 
-    async getUserProfile(userId: number): Promise<{ id: number; nombre: string; apellido: string; usuario: string; profile: { id: number; fotoUrl: string; telefono: string; biografia: string; }; } | null> {
+    async getUserProfile(userId: number): Promise<UserProfileDTO | null> {
         const user = await User.findByPk(userId, {
             include: [{
                 model: UserProfile,
                 as: 'profile',
-                attributes: ['id', 'fotoUrl', 'telefono', 'biografia']
+                attributes: ['id', 'fotoBase64', 'telefono', 'correo', 'biografia', 'fechaNac', 'genero']
             }]
         });
         return user ? user.get() : null;
     }
 
-    async UpdateUserProfile(userId: number, fotoUrl: string | null, telefono: string | null, biografia: string) {
-        const userProfile = await UserProfile.findByPk(userId);
+    async updateUserProfile(userId: number, data: {
+            fotoBase64?: string | null;
+            telefono?: string | null;
+            correo?: string | null;
+            biografia?: string;
+        }): Promise<void> {
+        const userProfile = await UserProfile.findOne({ where: { userId } });
         if (!userProfile) {
             throw new Error("User profile not found")
         }
-        userProfile.fotoUrl = fotoUrl;
-        userProfile.telefono = telefono;
-        userProfile.biografia = biografia;
+        if (data.fotoBase64 !== undefined) userProfile.fotoBase64 = data.fotoBase64;
+        if (data.telefono !== undefined) userProfile.telefono = data.telefono;
+        if (data.correo !== undefined) userProfile.correo = data.correo;
+        if (data.biografia !== undefined) userProfile.biografia = data.biografia;
         await userProfile.save();
-        return userProfile.get();
     }
 
 }
