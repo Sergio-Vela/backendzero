@@ -28,4 +28,23 @@ export class PasswordHistoryController {
         }
     }
 
+    async updatePasswordHistory(req: Request, res: Response) {
+        try {
+            const id = Number(req.params.id);
+            const { pwHash, current } = req.body;
+
+            if (!Number.isInteger(id) || id <= 0) {
+                return res.status(400).json({ error: "Invalid id parameter" });
+            }
+
+            const updatedPwHistory = await pwHistoryService.updatePasswordHistory(id, pwHash, current);
+            if (updatedPwHistory) {
+                return res.json(updatedPwHistory);
+            } else {
+                return res.status(404).json({ error: "Password history not found" });
+            }
+        } catch (error) {
+            return res.status(500).json({ error: (error as Error).message });
+        }
+    }
 }

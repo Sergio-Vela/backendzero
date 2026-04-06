@@ -6,5 +6,6 @@ const passwordHistoryController = new PasswordHistoryController();
 
 passwordHistoryRoutes.post("/password-history", (req, res) => passwordHistoryController.createPasswordHistory(req, res));
 passwordHistoryRoutes.get("/password-history/:userId", (req, res) => passwordHistoryController.getPasswordHistory(req, res));
+passwordHistoryRoutes.put("/password-history/:id", (req, res) => passwordHistoryController.updatePasswordHistory(req, res));
 
 export default passwordHistoryRoutes;
