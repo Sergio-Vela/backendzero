@@ -39,7 +39,7 @@ UserProfile.init(
         },
         biografia: {
             type: DataTypes.TEXT,
-            allowNull: false,
+            allowNull: true,
         },
         fechaNac: {
             type: DataTypes.DATE,

@@ -6,7 +6,7 @@ const userService = new UserServiceImpl();
 export class UserController {
     async createUser(req: Request, res: Response) {
         console.log('REQUESTTTTT', req);
-        const { nombre, apellido, usuario, password } = req.body;
+        const { nombre, apellido, usuario } = req.body;
         try {
             const user = await userService.createUser(nombre, apellido, usuario);
             res.status(201).json(user);
