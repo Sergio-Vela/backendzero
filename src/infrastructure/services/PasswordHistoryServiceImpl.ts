@@ -49,18 +49,20 @@ export class PasswordHistoryServiceImpl implements PasswordHistoryService {
     }
 
     async updatePasswordHistory(id: number, pwHash?: string, current?: boolean): Promise<PasswordHistory | null> {
-        const updateData: any = {};
-        if (pwHash !== undefined) {
-            updateData.pwHash = await bcrypt.hash(pwHash, 10);
-        }
-        if (current !== undefined) {
-            updateData.current = current;
+        const pwHistory = await PasswordHistory.findByPk(id);
+        if (!pwHistory) {
+            return null;
         }
 
-        const [affectedRows] = await PasswordHistory.update(updateData, { where: { id } });
-        if (affectedRows > 0) {
-            return await PasswordHistory.findByPk(id);
+        if (pwHash !== undefined) {
+            pwHistory.pwHash = await bcrypt.hash(pwHash, 10);
         }
-        return null;
+        if (current !== undefined) {
+            pwHistory.current = current;
+        }
+
+        await pwHistory.save();
+        return pwHistory;
     }
+
 } 

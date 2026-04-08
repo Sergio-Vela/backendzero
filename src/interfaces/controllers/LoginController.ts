@@ -30,7 +30,7 @@ export class LoginController {
                 return res.status(404).json({ error: "User not found" });
             }
 
-            // 2. obtener password actual
+            // obtener password actual
             const pw = await PasswordHistory.findOne({
                 where: { userId: user.id, current: true }
             });
@@ -39,7 +39,7 @@ export class LoginController {
                 return res.status(404).json({ error: "Password not found" });
             }
 
-            // 3. comparar password
+            //comparar password
             const isValid = await bcrypt.compare(password, pw.pwHash);
 
             if (!isValid) {
