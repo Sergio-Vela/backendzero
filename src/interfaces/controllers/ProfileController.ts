@@ -23,9 +23,9 @@ export class profileController {
 
     async updateUserProfile(req: Request, res: Response){
         const { id } = req.params;
-        const { fotoBase64, telefono, correo, biografia } = req.body;
+        const { fotoBase64, telefono, correo, biografia, fechaNac, genero } = req.body;
         try {
-            await profileService.updateUserProfile(Number(id), {fotoBase64: fotoBase64, telefono: telefono, correo: correo, biografia: biografia});
+            await profileService.updateUserProfile(Number(id), {fotoBase64: fotoBase64, telefono: telefono, correo: correo, biografia: biografia, fechaNac: fechaNac, genero: genero});
             res.status(200).json({ message: "User profile updated successfully" });
         } catch (error) {
             console.error("Error updating user profile: ", error);

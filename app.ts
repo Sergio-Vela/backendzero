@@ -13,6 +13,8 @@ import purchaseDetailRoutes from "./src/interfaces/routes/inventory/PurchaseDeta
 import movementRoutes from "./src/interfaces/routes/inventory/MovementRoutes";
 import cors from "cors";
 import registerR from "./src/interfaces/routes/registerRoutes";
+import LoginRouter from "./src/interfaces/routes/LoginRoutes";
+
 
 
 export const app = express();
@@ -38,6 +40,7 @@ app.use("/api", purchaseRoutes);
 app.use("/api", purchaseDetailRoutes);
 app.use("/api", movementRoutes);
 app.use("/api", registerR)
+app.use("/api", LoginRouter);
 
 app.get("/health", (req, res) => {
     res.send("ok");

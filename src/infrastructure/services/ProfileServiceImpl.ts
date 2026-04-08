@@ -4,10 +4,6 @@ import { UserProfile } from "../models/userProfileModel";
 import { UserProfileDTO } from "../../application/dtos/userProfileDto";
 
 export class UserProfileServiceImpl implements UserProfileService {
-/*     async createUserProfile(userId: number, fotoBase64: string, telefono: string, correo: string, biografia: string, fechaNac: Date, genero: string): Promise<UserProfile>{
-        const createProfile: UserProfile = await UserProfile.create({ userId: userId, fotoBase64, telefono, correo, biografia, fechaNac, genero });
-        return createProfile
-    } */
 
     async createUserProfile(data: {
         userId: number;
@@ -38,6 +34,8 @@ export class UserProfileServiceImpl implements UserProfileService {
             telefono?: string | null;
             correo?: string | null;
             biografia?: string;
+            fechaNac?: Date | null;
+            genero?: string | null;
         }): Promise<void> {
         const userProfile = await UserProfile.findOne({ where: { userId } });
         if (!userProfile) {
@@ -47,6 +45,8 @@ export class UserProfileServiceImpl implements UserProfileService {
         if (data.telefono !== undefined) userProfile.telefono = data.telefono;
         if (data.correo !== undefined) userProfile.correo = data.correo;
         if (data.biografia !== undefined) userProfile.biografia = data.biografia;
+        if (data.fechaNac !== undefined) userProfile.fechaNac = data.fechaNac;
+        if (data.genero !== undefined) userProfile.genero = data.genero;
         await userProfile.save();
     }
 

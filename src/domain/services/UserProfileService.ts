@@ -33,6 +33,8 @@ export interface UserProfileService {
             telefono?: string | null;
             correo?: string | null;
             biografia?: string;
+            fechaNac?: Date | null;
+            genero?: string | null;
         }
     ): Promise<void>;
 }

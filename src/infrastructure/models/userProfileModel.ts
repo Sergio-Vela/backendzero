@@ -10,7 +10,7 @@ export class UserProfile extends Model {
     public correo!: string | null;
     public biografia!: string;
     public fechaNac!: Date | null;
-    public genero!: string;
+    public genero!: string | null;
 
 }
 
