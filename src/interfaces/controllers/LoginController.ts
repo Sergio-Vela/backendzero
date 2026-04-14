@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import { UserServiceImpl } from "../../infrastructure/services/UserServiceImpl";
-import { PasswordHistory } from "../../infrastructure/models/passwordHistoryModel";
+import { PasswordHistoryServiceImpl } from "../../infrastructure/services/PasswordHistoryServiceImpl";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 const userService = new UserServiceImpl();
+const pwhistory = new PasswordHistoryServiceImpl();
 
 const SECRET = "mi_secreto";
 
@@ -31,9 +32,7 @@ export class LoginController {
             }
 
             // obtener password actual
-            const pw = await PasswordHistory.findOne({
-                where: { userId: user.id, current: true }
-            });
+            const pw = await pwhistory.getCurrentPassword(user.id);
 
             if (!pw) {
                 return res.status(404).json({ error: "Password not found" });

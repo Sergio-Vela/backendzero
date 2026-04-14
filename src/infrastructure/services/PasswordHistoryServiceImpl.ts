@@ -65,4 +65,18 @@ export class PasswordHistoryServiceImpl implements PasswordHistoryService {
         return pwHistory;
     }
 
+    async getCurrentPassword(userId: number): Promise<{ pwHash: string } | null> {
+
+        const pw = await PasswordHistory.findOne({
+            where: { userId, current: true },
+            attributes: ['pwHash']
+        });
+
+        if (!pw) return null;
+
+        return {
+            pwHash: pw.pwHash
+        };
+    }
+
 } 
