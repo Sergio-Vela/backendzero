@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
-    "module": "es2020",
-    "moduleResolution": "node",
+    "module": "commonjs",
+    "moduleResolution": "bundler",
+    "ignoreDeprecations": "6.0",
     "target": "es2020",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
