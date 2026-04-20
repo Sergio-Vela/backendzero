@@ -1,5 +1,5 @@
-import { app } from './app.js';
-import { initDatabase } from './src/infrastructure/database/initDatabase.js';
+import { app } from './app';
+import { initDatabase } from './src/infrastructure/database/initDatabase';
 
 
 
